@@ -127,14 +127,15 @@
         }
         if(isset($_POST['success_submit'])){
             $user_id = $_POST['user'];
-            $query = "SELECT * FROM 'user' where  U_ID='".$user_id."'";
+            $query = "SELECT * FROM 'users' WHERE  U_ID='".$user_id."'";
             $result = mysqli_query($con, $query);
                 if ($result){
                     while($rows=mysqli_fetch_assoc($result)){
+                    $_SESSION['usertype'] = $rows['usertype'];
                     $_SESSION['username'] = $rows["username"];
                     }
                 }
                 header("Location:welcome.php");
         }
-      
+
 ?>

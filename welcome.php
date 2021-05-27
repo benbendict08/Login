@@ -7,6 +7,8 @@ $result1 = mysqli_query($con, $query);
 $result2 = mysqli_query($con, $query);
 $result3 = mysqli_query($con, $query);
 
+
+
 if(isset($_POST['logout'])){
     $username = $_POST['name'];
     $query="INSERT into `event_log` (UID, activity, date_time)VALUES ('$username','logout',current_timestamp())";
@@ -69,6 +71,10 @@ if(isset($_POST['change_submit'])){
     
         
     }
+if(isset($_POST['backup'])){
+    header('location:backup.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,6 +106,20 @@ function reset() {
     <form class="form" method="post" action="welcome.php">
         <input type="hidden"name="name" value="<?php echo $_SESSION['username'];?>">
         <button type="submit" name="reset" class='login-button'>Reset</button><br><br>
+        <?php
+            $user_type='admin';
+            $query = "SELECT * FROM users where username='".$username."'";
+            $result4 = mysqli_query($con, $query);
+                while($rows=mysqli_fetch_array($result4)){
+                    if($user_type==$rows['user_type']){
+                        echo "<button type='submit' name='backup' class='login-button'>Download</button><br><br>";
+                    }
+                    
+                }
+            
+            
+        ?>
+        
         <button type="submit" name="logout" class='login-button'>Logout</button>
         <table style="width: 350px;">
                 <tr>
